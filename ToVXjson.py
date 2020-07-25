@@ -1,3 +1,128 @@
-#打开文件
-with open('data.json', 'r') as preJson:
-    print(f.read())
+import sys
+
+#读取json文件
+def inputJson():
+    try:
+        with open('data.json', 'r') as datajson:
+            prejson = datajson.read()
+            return prejson
+    except:
+        print('inputJson读取json文件异常!')
+        sys.exit()
+
+#拆分各个部分组合成数组
+def getSplitArray(json, str):
+    try:
+        arr = json.split(str)
+        return arr
+    except:
+        print('getSplitArray拆分json出错!')
+        print('json:',json,'分割符号：',str)
+        sys.exit()
+
+#去掉开头结尾的括号
+def arrTrim(arr):
+    try:
+        if arr[0][:2] == '[{':
+            arr[0] = arr[0][2:]
+        length = len(arr)
+        tailLen = len(arr[length-1])
+        if arr[length-1][tailLen-2:] == '}]':
+            arr[length-1] = arr[length-1][:tailLen-2]
+        return arr
+    except:
+        print('arrTrim去掉开头结尾括号出错!')
+        print('arr[0]:',arr[0],'arr['+(tailLen-1)+']',str)
+        sys.exit()
+   
+#替换关键词
+def transform(preArr):
+    try:
+        aftArr = []
+        flagStack = [False]       #栈：存储是否要忽略key去当成数组一样只存储value
+        index = 0                 #与上面的栈配合使用
+        for item in preArr:
+            if len(item) > 30 and item[:30] == '"SEPERATION_TAG_OBJECT_BEGIN":':
+                aftArr.append(item[30:] + ':{')
+                flagStack.append(False)
+                index+=1
+            elif len(item) > 29 and item[:29] == '"SEPERATION_TAG_ARRAY_BEGIN":':
+                aftArr.append(item[29:] + ':[')
+                flagStack.append(True)
+                index+=1
+            elif len(item) > 28 and item[:28] == '"SEPERATION_TAG_OBJECT_END":':
+                aftArr.append('}')
+                flagStack.pop()
+                index-=1
+            elif len(item) > 27 and item[:27] == '"SEPERATION_TAG_ARRAY_END":':
+                aftArr.append(']')
+                flagStack.pop()
+                index-=1
+            elif flagStack[index]:
+                aftArr.append(item.split(':')[1])
+            else :
+                aftArr.append(item)
+            print('替换符号完成！')
+        return mergeAndClean(aftArr)
+    except:
+        print('transform函数转化出错!')
+        sys.exit()
+
+#去掉括号前后的逗号
+def mergeAndClean(arr):
+    try:
+        print('开始清理逗号')
+        json = (',').join(arr)
+        json = json.replace(',[', '[')
+        json = json.replace(',{', '{')
+        json = json.replace(',]', ']')
+        json = json.replace(',}', '}')
+        json = json.replace('[,', '[')
+        json = json.replace('{,', '{')
+        return json
+        print('清理完成')
+    except:
+        print('mergeAndClean函数清理出错!')
+        sys.exit()
+
+#输出json文件
+def outputJson(text):
+    try:
+        with open('output.json', 'a') as f:
+            f.write(text)
+    except:
+        print('outputJson输出函数清理出错!')
+        sys.exit()
+
+#主函数
+def main():
+    print('开始读取文件')
+    jsonText = inputJson()
+    print('已读取文件')
+
+    print('开始拆分')
+    jsonArr = getSplitArray(jsonText,'},{')
+    print('拆分完毕')
+
+    print('预处理开始')
+    jsonArr = arrTrim(jsonArr)
+    print('预处理完毕')
+
+    print('开始转化，总量为：'+str(len(jsonArr)))
+    i = 0
+    finalJson = ''
+    for item in jsonArr:
+        preArr = getSplitArray(item, ',')
+        text = transform(preArr)
+        print("已经转化数量：",str(i))
+        i+=1
+        finalJson += text
+    print('转化完毕')
+
+    print('开始输出json文件')
+    outputJson(finalJson)
+    print('输出完成！')
+    
+main()
+
+
