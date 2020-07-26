@@ -1,1 +1,15 @@
-{"url":"https://github.com/kkkilo/ToVXjson","school":"scnu","job":"student","name":"kkkilo","date":"2020/07/25","SEPERATION_TAG_ARRAY_BEGIN":"array","0":0,"1":1,"2":2,"SEPERATION_TAG_ARRAY_END":"array","SEPERATION_TAG_OBJECT_BEGIN":"object","objID": "obj","objName":"objName","SEPERATION_TAG_ARRAY_BEGIN":"objectArr","0":0,"1":1,"2":2,"SEPERATION_TAG_ARRAY_END":"objectArr","SEPERATION_TAG_OBJECT_END":"object"}
+{
+    "name": "kkkilo",
+    "url": "https://github.com/kkkilo/ToVXjson",
+    "SEPERATION_TAG_OBJECT_BEGIN": "perInfo",
+    "gender": "男",
+    "school": "SCNU",
+    "SEPERATION_TAG_ARRAY_BEGIN": "area",
+    "any": "广东省",
+    "any": "东莞市",
+    "any": "某某镇",
+    "SEPERATION_TAG_ARRAY_END": "area",
+    "major": "软件工程",
+    "SEPERATION_TAG_OBJECT_END": "perInfo",
+    "time": "2020/7/26"
+}

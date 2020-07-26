@@ -1,13 +1,15 @@
+#encoding:utf-8
 import sys
 
 #读取json文件
 def inputJson():
     try:
-        with open('data.json', 'r') as datajson:
+        with open('data.json', 'r',encoding = 'utf-8') as datajson:
             prejson = datajson.read()
             return prejson
-    except:
+    except Exception as e:
         print('inputJson读取json文件异常!')
+        print(e)
         sys.exit()
 
 #拆分各个部分组合成数组
@@ -15,8 +17,9 @@ def getSplitArray(json, str):
     try:
         arr = json.split(str)
         return arr
-    except:
+    except Exception as e:
         print('getSplitArray拆分json出错!')
+        print(e)
         print('json:',json,'分割符号：',str)
         sys.exit()
 
@@ -30,8 +33,9 @@ def arrTrim(arr):
         if arr[length-1][tailLen-2:] == '}]':
             arr[length-1] = arr[length-1][:tailLen-2]
         return arr
-    except:
+    except Exception as e:
         print('arrTrim去掉开头结尾括号出错!')
+        print(e)
         print('arr[0]:',arr[0],'arr['+(tailLen-1)+']',str)
         sys.exit()
    
@@ -64,8 +68,9 @@ def transform(preArr):
                 aftArr.append(item)
             print('替换符号完成！')
         return mergeAndClean(aftArr)
-    except:
+    except Exception as e:
         print('transform函数转化出错!')
+        print(e)
         sys.exit()
 
 #去掉括号前后的逗号
@@ -81,17 +86,19 @@ def mergeAndClean(arr):
         json = json.replace('{,', '{')
         return json
         print('清理完成')
-    except:
+    except Exception as e:
         print('mergeAndClean函数清理出错!')
+        print(e)
         sys.exit()
 
 #输出json文件
 def outputJson(text):
     try:
-        with open('output.json', 'a') as f:
-            f.write(text)
-    except:
+        with open('output.json', 'wb') as f:
+            f.write(text.encode("utf-8"))
+    except Exception as e:
         print('outputJson输出函数清理出错!')
+        print(e)
         sys.exit()
 
 #主函数
@@ -99,6 +106,7 @@ def main():
     print('开始读取文件')
     jsonText = inputJson()
     print('已读取文件')
+    print(jsonText)
 
     print('开始拆分')
     jsonArr = getSplitArray(jsonText,'},{')
