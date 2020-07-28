@@ -1,5 +1,6 @@
 #encoding:utf-8
 import sys
+import os
 
 #读取json文件
 def inputJson():
@@ -28,10 +29,14 @@ def arrTrim(arr):
     try:
         if arr[0][:2] == '[{':
             arr[0] = arr[0][2:]
+        elif arr[0][0] == '{':
+            arr[0] = arr[0][1:]
         length = len(arr)
         tailLen = len(arr[length-1])
         if arr[length-1][tailLen-2:] == '}]':
             arr[length-1] = arr[length-1][:tailLen-2]
+        elif arr[length-1][tailLen-1] == '}':
+            arr[length-1] = arr[length-1][:tailLen-1]
         return arr
     except Exception as e:
         print('arrTrim去掉开头结尾括号出错!')
@@ -130,6 +135,7 @@ def main():
     print('开始输出json文件')
     outputJson(finalJson)
     print('输出完成！')
+    os.system('pause')
     
 main()
 
