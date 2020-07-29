@@ -51,19 +51,19 @@ def transform(preArr):
         flagStack = [False]       #栈：存储是否要忽略key去当成数组一样只存储value
         index = 0                 #与上面的栈配合使用
         for item in preArr:
-            if len(item) > 30 and item[:30] == '"SEPERATION_TAG_OBJECT_BEGIN":':
-                aftArr.append(item[30:] + ':{')
+            if len(item) > 28 and item[:28] == '"SEPERATION_TAG_OBJECT_BEGIN':
+                aftArr.append(item[28:] + ':{')
                 flagStack.append(False)
                 index+=1
-            elif len(item) > 29 and item[:29] == '"SEPERATION_TAG_ARRAY_BEGIN":':
-                aftArr.append(item[29:] + ':[')
+            elif len(item) > 27 and item[:27] == '"SEPERATION_TAG_ARRAY_BEGIN':
+                aftArr.append(item[27:] + ':[')
                 flagStack.append(True)
                 index+=1
-            elif len(item) > 28 and item[:28] == '"SEPERATION_TAG_OBJECT_END":':
+            elif len(item) > 26 and item[:26] == '"SEPERATION_TAG_OBJECT_END':
                 aftArr.append('}')
                 flagStack.pop()
                 index-=1
-            elif len(item) > 27 and item[:27] == '"SEPERATION_TAG_ARRAY_END":':
+            elif len(item) > 25 and item[:25] == '"SEPERATION_TAG_ARRAY_END':
                 aftArr.append(']')
                 flagStack.pop()
                 index-=1
