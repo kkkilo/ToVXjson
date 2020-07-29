@@ -13,3 +13,8 @@
 ![所要求的json格式图](https://raw.githubusercontent.com/kkkilo/ToVXjson/master/readmeImg/%E6%89%80%E8%A6%81%E6%B1%82%E6%A0%BC%E5%BC%8F%E7%9A%84json.jpg)  
 ![json对比图](https://raw.githubusercontent.com/kkkilo/ToVXjson/master/readmeImg/json%E5%AF%B9%E6%AF%94%E5%9B%BE.jpg)   
 ![json对应的前身excel图](https://raw.githubusercontent.com/kkkilo/ToVXjson/master/readmeImg/json%E5%AF%B9%E5%BA%94excel%E6%A0%BC%E5%BC%8F.jpg)   
+
+
+### 注意点
+* 脚本其中会用到split函数，以英文逗号进行分隔，所以对于key或value中使用到英文逗号都会造成失败，如果可以请将他们换成中文逗号
+* 

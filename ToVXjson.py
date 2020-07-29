@@ -72,6 +72,8 @@ def transform(preArr):
             else :
                 aftArr.append(item)
             print('替换符号完成！')
+        if len(flagStack) > 1:
+            print('SEPERATINO分隔符的标志写错啦，注意检查一下BEGIN和ENDING是不是写错啦')
         return mergeAndClean(aftArr)
     except Exception as e:
         print('transform函数转化出错!')
@@ -89,6 +91,7 @@ def mergeAndClean(arr):
         json = json.replace(',}', '}')
         json = json.replace('[,', '[')
         json = json.replace('{,', '{')
+        json = "{" + json + "}"
         return json
         print('清理完成')
     except Exception as e:
@@ -111,7 +114,7 @@ def main():
     print('开始读取文件')
     jsonText = inputJson()
     print('已读取文件')
-    print(jsonText)
+    #print(jsonText)
 
     print('开始拆分')
     jsonArr = getSplitArray(jsonText,'},{')
@@ -127,7 +130,7 @@ def main():
     for item in jsonArr:
         preArr = getSplitArray(item, ',')
         text = transform(preArr)
-        print("已经转化数量：",str(i))
+        print("已经转化数量：",str(i)+"/"+str(len(jsonArr)-1))
         i+=1
         finalJson += text
     print('转化完毕')
