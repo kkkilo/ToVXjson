@@ -11,6 +11,7 @@ def inputJson():
     except Exception as e:
         print('inputJson读取json文件异常!')
         print(e)
+        os.system('pause')
         sys.exit()
 
 #拆分各个部分组合成数组
@@ -22,6 +23,7 @@ def getSplitArray(json, str):
         print('getSplitArray拆分json出错!')
         print(e)
         print('json:',json,'分割符号：',str)
+        os.system('pause')
         sys.exit()
 
 #去掉开头结尾的括号
@@ -42,6 +44,7 @@ def arrTrim(arr):
         print('arrTrim去掉开头结尾括号出错!')
         print(e)
         print('arr[0]:',arr[0],'arr['+(tailLen-1)+']',str)
+        os.system('pause')
         sys.exit()
    
 #替换关键词
@@ -51,12 +54,13 @@ def transform(preArr):
         flagStack = [False]       #栈：存储是否要忽略key去当成数组一样只存储value
         index = 0                 #与上面的栈配合使用
         for item in preArr:
+            itemIndex = item.find(":")
             if len(item) > 28 and item[:28] == '"SEPERATION_TAG_OBJECT_BEGIN':
-                aftArr.append(item[28:] + ':{')
+                aftArr.append(item[(itemIndex+1):] + ':{')
                 flagStack.append(False)
                 index+=1
             elif len(item) > 27 and item[:27] == '"SEPERATION_TAG_ARRAY_BEGIN':
-                aftArr.append(item[27:] + ':[')
+                aftArr.append(item[(itemIndex+1):] + ':[')
                 flagStack.append(True)
                 index+=1
             elif len(item) > 26 and item[:26] == '"SEPERATION_TAG_OBJECT_END':
@@ -78,6 +82,7 @@ def transform(preArr):
     except Exception as e:
         print('transform函数转化出错!')
         print(e)
+        os.system('pause')
         sys.exit()
 
 #去掉括号前后的逗号
@@ -97,6 +102,7 @@ def mergeAndClean(arr):
     except Exception as e:
         print('mergeAndClean函数清理出错!')
         print(e)
+        os.system('pause')
         sys.exit()
 
 #输出json文件
@@ -107,6 +113,7 @@ def outputJson(text):
     except Exception as e:
         print('outputJson输出函数清理出错!')
         print(e)
+        os.system('pause')
         sys.exit()
 
 #主函数
